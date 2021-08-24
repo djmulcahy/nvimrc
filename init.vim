@@ -1,14 +1,13 @@
-
 " set powershell as default shell if using windows
 if has('win32')
    let &shell = 'pwsh'
    let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
+   let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+   let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+   set shellquote= shellxquote=
 endif
 
-"set shell=powershell
- "shellquote=( shellpipe=\| shellredir=> 
-" set shellcmdflag=-NoLogo\ -NoProfile\ -ExecutionPolicy\ RemoteSigned\ -Command
-
+" Add plugins
 call plug#begin('~/.vim/plugged')
 Plug 'chauncey-garrett/vim-tasklist'
 Plug 'fholgado/minibufexpl.vim'
@@ -18,7 +17,6 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-""Plug 'ervandew/supertab'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'deoplete-plugins/deoplete-jedi'
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -38,9 +36,6 @@ Plug 'psliwka/vim-smoothie'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'Yggdroot/indentLine'
-
-" much of plugins from 
-" https://dev.to/christalib/i-spent-3-years-configuring-n-vim-and-this-what-i-learnt-22on
 
 call plug#end()
 
@@ -142,5 +137,22 @@ let g:startify_session_dir = '~/.config/nvim/session'
 let g:startify_enable_special = 0
 let g:startify_session_before_save = [
   \ 'echo "Cleaning up before saving ..."',
-  \ 'silent! NERDTreeClose'
+  \ 'set g:startify_session_with_NERDTree = 0',
+  \ 'if exists("g:NERDTree") && g:NERDTree.IsOpen()',
+  \ '    set g:startify_session_with_NERDTree = 1',
+  \ '    silent! NERDTreeClose',
+  \ 'endif'
   \ ]
+
+" Add commands that mimic fugitive plugin to push and fetch git repos
+command! -bang -bar -nargs=* Gpush execute 'Dispatch<bang> -dir=' .
+      \ fnameescape(FugitiveGitDir()) 'git push' <q-args>
+command! -bang -bar -nargs=* Gfetch execute 'Dispatch<bang> -dir=' .
+      \ fnameescape(FugitiveGitDir()) 'git fetch' <q-args>
+
+" Add add mapping for controling tabs in vim
+map <leader>tn :tabnew<cr>
+map <leader>t<leader> :tabnext
+map <leader>tm :tabmove
+map <leader>tc :tabclose<cr>
+map <leader>to :tabonly<cr>
