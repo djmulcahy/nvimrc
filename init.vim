@@ -1,12 +1,19 @@
 
 " set powershell as default shell if using windows
-set shell=powershell shellquote=( shellpipe=\| shellredir=> shellxquote=
+if has('win32')
+   let &shell = 'pwsh'
+   let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
+endif
+
+"set shell=powershell
+ "shellquote=( shellpipe=\| shellredir=> 
 " set shellcmdflag=-NoLogo\ -NoProfile\ -ExecutionPolicy\ RemoteSigned\ -Command
 
 call plug#begin('~/.vim/plugged')
 Plug 'chauncey-garrett/vim-tasklist'
 Plug 'fholgado/minibufexpl.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'vim-airline/vim-airline'
@@ -18,9 +25,9 @@ Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'lervag/vimtex'
 Plug 'scrooloose/nerdcommenter'
+
 " Track the engine.
 Plug 'SirVer/ultisnips'
-
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
 
@@ -46,7 +53,7 @@ call deoplete#custom#var('omni', 'input_patterns', {
       \})
 
 " set first of menu selected in deoplete
- set completeopt=menu,noinsert
+set completeopt=menu,noinsert
 
 " setings for ultiSnips
 let g:UltiSnipsExpandTrigger='<tab>'
