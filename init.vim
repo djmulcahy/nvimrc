@@ -11,11 +11,14 @@ endif
 
 " Add plugins
 call plug#begin('~/.vim/plugged')
+
+" Plugin: General for easier editing
 Plug 'chauncey-garrett/vim-tasklist'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-repeat'
+Plug 'scrooloose/nerdcommenter'
 
 " Plugin: Visuals of editor
 Plug 'vim-airline/vim-airline'
@@ -34,7 +37,6 @@ Plug 'airblade/vim-gitgutter'
 " Plugin: Code context and snippets
 Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
-Plug 'scrooloose/nerdcommenter'
 
 " Plugin: LSP
 Plug 'neovim/nvim-lspconfig'
@@ -65,7 +67,7 @@ call plug#end()
 let mapleader = ","
 
 " Add Latex integration with vim
-let g:python3_host_prog = 'C:\ProgramData\Anaconda3\python.exe'
+let g:python3_host_prog = 'C:\ProgramData\Anaconda3\envs\neovim'
 
 " " setings for ultiSnips
 " let g:UltiSnipsExpandTrigger="<tab>"
@@ -181,3 +183,14 @@ map <leader>to :tabonly<cr>
 
 
 let g:ultisnips_python_style="NUMPY"
+
+" Config for LSP and COQ
+
+lua << EOF
+local lsp = require'lspconfig'
+local coq = require'coq'
+
+lsp.jedi_language_server.setup{}
+lsp.jedi_language_server.setup{ coq.lsp_ensure_capabilities() } 
+EOF
+
