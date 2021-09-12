@@ -63,7 +63,6 @@ if complete_plugin == 'coc'
 		\ 'coc-jedi', 'coc-yaml', 'coc-json', 'coc-html', 'coc-markdownlint',
 		\ 'coc-r-lsp']
   Plug 'SirVer/ultisnips'
-  " Snippets are separated from the engine. Add this if you want them:
   Plug 'honza/vim-snippets'
 elseif complete_plugin == 'coq'
   Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
@@ -183,6 +182,10 @@ command! -bang -bar -nargs=* Gpush execute 'Dispatch<bang> -dir=' .
       \ fnameescape(FugitiveGitDir()) 'git push' <q-args>
 command! -bang -bar -nargs=* Gfetch execute 'Dispatch<bang> -dir=' .
       \ fnameescape(FugitiveGitDir()) 'git fetch' <q-args>
+
+" Add Dispatch default command for Python
+autocmd FileType python let b:dispatch = 'python %'
+
 
 " Add add mapping for controling tabs in vim
 map <leader>tn :tabnew<cr>
@@ -316,14 +319,12 @@ if complete_plugin ==? 'coc'
   omap ac <Plug>(coc-classobj-a)
 
   " Remap <C-f> and <C-b> for scroll float windows/popups.
-  if has('nvim-0.4.0') || has('patch-8.2.0750')
-	nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-	nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-	inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-	inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-	vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-	vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-  endif
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 
   " Use CTRL-S for selections ranges.
   " Requires 'textDocument/selectionRange' support of language server.
