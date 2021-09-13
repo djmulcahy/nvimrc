@@ -61,7 +61,7 @@ if complete_plugin == 'coc'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   let g:coc_global_extentions = [
 		\ 'coc-jedi', 'coc-yaml', 'coc-json', 'coc-html', 'coc-markdownlint',
-		\ 'coc-r-lsp']
+		\ 'coc-r-lsp', 'coc-texlab' ]
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
 elseif complete_plugin == 'coq'
