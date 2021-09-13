@@ -25,6 +25,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-repeat'
 Plug 'scrooloose/nerdcommenter'
+Plug 'karoliskoncevicius/vim-sendtowindow'
 
 " Plugin: Visuals of editor
 Plug 'vim-airline/vim-airline'
@@ -39,7 +40,6 @@ Plug 'psliwka/vim-smoothie'
 " Plugin: Git integration
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-
 
 " Plugin: LSP
 Plug 'neovim/nvim-lspconfig'
